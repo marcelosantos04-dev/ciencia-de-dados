@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Questionário de Hábitos</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1rem; }
+    label { display:block; margin-top:1rem; }
+    input, select, textarea { width:100%; padding:0.5rem; margin-top:0.25rem; box-sizing:border-box; }
+    button { margin-top:1rem; padding:0.6rem 1rem; }
+    .small { font-size:0.9rem; color:#555; }
+  </style>
+</head>
+<body>
+  <h1>Questionário anônimo sobre hábitos</h1>
+  <p class="small">Sua participação é voluntária. Não coletamos nome, endereço ou dados identificáveis.</p>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul style="color: red;">
+      {% for m in messages %}<li>{{ m }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form action="{{ url_for('submit') }}" method="post" novalidate>
+    <label>Quantos dias por semana você pratica atividades físicas?
+      <input type="number" name="days_physical_activity_week" min="0" max="7" step="1" value="0" required>
+    </label>
+
+    <label>Quantas porções de frutas você consome em uma semana?
+      <input type="number" name="portions_fruit_week" min="0" step="1" value="0" required>
+    </label>
+
+    <label>Quantas horas de sono você costuma ter em uma noite durante a semana?
+      <input type="number" name="sleep_hours_weekday" min="0" max="24" step="0.5" value="7" required>
+    </label>
+
+    <label>Quantas bebidas açucaradas você consome em uma semana (latas/copos/garrafas)?
+      <input type="number" name="sugary_drinks_week" min="0" step="1" value="0" required>
+    </label>
+
+    <label>Quantas horas por semana você passa assistindo vídeos, filmes e/ou séries em dispositivos móveis?
+      <input type="number" name="mobile_video_hours_week" min="0" step="0.5" value="0" required>
+    </label>
+
+    <label>Faixa etária (opcional)
+      <select name="age_range">
+        <option value="">Prefiro não informar</option>
+        <option value="<18">&lt;18</option>
+        <option value="18-24">18–24</option>
+        <option value="25-34">25–34</option>
+        <option value="35-44">35–44</option>
+        <option value="45-54">45–54</option>
+        <option value="55+">55+</option>
+      </select>
+    </label>
+
+    <label>Gênero (opcional)
+      <select name="gender">
+        <option value="">Prefiro não informar</option>
+        <option value="Feminino">Feminino</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Outro">Outro</option>
+      </select>
+    </label>
+
+    <label>Observações (opcional)
+      <textarea name="notes" rows="3"></textarea>
+    </label>
+
+    <label>
+      <input type="checkbox" name="consent" required> Eu li a declaração de consentimento e concordo em participar desta pesquisa (anônima).
+    </label>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <p class="small">Após enviar, você verá uma página de confirmação com opção para baixar o CSV (administrador/pesquisador).</p>
+</body>
+</html>
